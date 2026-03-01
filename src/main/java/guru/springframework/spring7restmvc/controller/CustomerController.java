@@ -38,6 +38,20 @@ public class CustomerController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @DeleteMapping("{customerId}")
+    public ResponseEntity deleteById(@PathVariable UUID customerId) {
+        customerService.deleteCustomerById(customerId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("{customerId}")
+    public ResponseEntity patchById(@PathVariable UUID customerId, @RequestBody Customer customer) {
+        customerService.patchCustomerById(customerId, customer);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> listAllCustomers(){
         return customerService.getAllCustomers();
