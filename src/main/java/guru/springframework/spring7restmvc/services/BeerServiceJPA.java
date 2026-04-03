@@ -2,6 +2,7 @@ package guru.springframework.spring7restmvc.services;
 
 import guru.springframework.spring7restmvc.mappers.BeerMapper;
 import guru.springframework.spring7restmvc.model.BeerDTO;
+import guru.springframework.spring7restmvc.model.BeerStyle;
 import guru.springframework.spring7restmvc.repositories.BeerRepository;
 import guru.springframework.spring7restmvc.entities.Beer;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,14 @@ public class BeerServiceJPA implements BeerService {
     private final BeerMapper beerMapper;
 
     @Override
-    public List<BeerDTO> listBeers(String beerName) {
+    public List<BeerDTO> listBeers(String beerName, String beerStyle) {
 
         List<Beer> beerList;
 
         if(StringUtils.hasText(beerName)) {
             beerList = listBeersByName(beerName);
+        } else if (StringUtils.hasText(beerStyle)) {
+            beerList = listBeersByStyle(beerStyle);
         } else {
             beerList = beerRepository.findAll();
         }
@@ -43,6 +46,10 @@ public class BeerServiceJPA implements BeerService {
 
     public List<Beer> listBeersByName(String beerName){
         return beerRepository.findAllByBeerNameIsLikeIgnoreCase("%" + beerName + "%");
+    }
+
+    private List<Beer> listBeersByStyle(String beerStyle){
+        return beerRepository.findAllByBeerStyle(BeerStyle.valueOf(beerStyle));
     }
 
     @Override
