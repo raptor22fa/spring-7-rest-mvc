@@ -6,9 +6,9 @@ create table category
     id                 varchar(36) NOT NULL PRIMARY KEY,
     description        varchar(50),
     created_date       timestamp,
-    last_modified_date datetime(6) DEFAULT NULL,
-    version            bigint      DEFAULT NULL
-) ENGINE = InnoDB;
+    last_modified_date timestamp(6) DEFAULT NULL,
+    version            bigint       DEFAULT NULL
+);
 
 create table beer_category
 (
@@ -17,5 +17,5 @@ create table beer_category
     primary key (beer_id, category_id),
     constraint pc_beer_id_fk FOREIGN KEY (beer_id) references beer (id),
     constraint pc_category_id_fk FOREIGN KEY (category_id) references category (id)
-) ENGINE = InnoDB;
+);
 
